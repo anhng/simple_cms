@@ -1,37 +1,37 @@
 class PagesController < ApplicationController
-  
+
   layout false
-  
-  # Add index definition
+
   def index
     @pages = Page.sorted
   end
 
   def show
-    @pages = Page.find(params[:id])
+    @page = Page.find(params[:id])
   end
 
   def new
-    @pages = Page.new({:name => "Page Title"})
+    @page = Page.new({:name => "Default"})
   end
 
   def create
-    @pages = Page.new(page_pagrams)
+    @page = Page.new(page_params)
     if @page.save
-        flash[:notice] = "Page created succesfully!"
-        redirect_to(:action => 'index')
+      flash[:notice] = "Page created successfully."
+      redirect_to(:action => 'index')
     else
       render('new')
+    end
   end
 
   def edit
-    @pages = Page.find(params[:id])
+    @page = Page.find(params[:id])
   end
 
   def update
-    @pages = Page.find(params[:id])
+    @page = Page.find(params[:id])
     if @page.update_attributes(page_params)
-      flash[:notice] = "Page updated successfully!"
+      flash[:notice] = "Page updated successfully."
       redirect_to(:action => 'show', :id => @page.id)
     else
       render('edit')
@@ -43,19 +43,16 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    @page = Page.find(params[:id]).destroy
-    flash[:notice] = "Page destroyed successfully!"
+    page = Page.find(params[:id]).destroy
+    flash[:notice] = "Page destroyed successfully."
     redirect_to(:action => 'index')
   end
-  
+
+
   private
 
-      def page_params
-        # same as using "params[:subject]", except that it:
-        # - raises an error if :subject is not present
-        # - allows listed attributes to be mass-assigned
-        params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
-      end
-  
-  
+    def page_params
+      params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
+    end
+
 end

@@ -1,38 +1,37 @@
 class SectionsController < ApplicationController
-  
+
   layout false
-  
+
   def index
     @sections = Section.sorted
   end
 
   def show
-    @sections = Section.find(params[:id])
+    @section = Section.find(params[:id])
   end
 
   def new
-    @sections = Section.new({:name => "Section Title"})
+    @section = Section.new({:name => "Default"})
   end
 
   def create
-    @sections = Section.new(section_params)
+    @section = Section.new(section_params)
     if @section.save
-      flash[:notice] = "Section created successffuly!"
+      flash[:notice] = "Section created successfully."
       redirect_to(:action => 'index')
     else
-      
+      render('new')
     end
   end
 
   def edit
     @section = Section.find(params[:id])
   end
-  
 
   def update
     @section = Section.find(params[:id])
     if @section.update_attributes(section_params)
-      flash[:notice] = "Section updated successfully!"
+      flash[:notice] = "Section updated successfully."
       redirect_to(:action => 'show', :id => @section.id)
     else
       render('edit')
@@ -42,16 +41,18 @@ class SectionsController < ApplicationController
   def delete
     @section = Section.find(params[:id])
   end
-  
+
   def destroy
-    @section = Section.find(params[:id]).destroy
-    flash[:notice] = "Section destroyed successfully!"
+    section = Section.find(params[:id]).destroy
+    flash[:notice] = "Section destroyed successfully."
     redirect_to(:action => 'index')
   end
-  
+
+
   private
+
     def section_params
       params.require(:section).permit(:page_id, :name, :position, :visible, :content_type, :content)
-  
-  
+    end
+
 end
