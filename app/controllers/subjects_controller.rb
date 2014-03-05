@@ -1,6 +1,6 @@
 class SubjectsController < ApplicationController
   
-  layout false
+  layout "admin"
   
   def index
     @subjects = Subject.sorted
@@ -12,6 +12,8 @@ class SubjectsController < ApplicationController
 
   def new
     @subject = Subject.new({:name => "Default"})
+    @subject_count = Subject.count + 1
+    
   end
   
   def create
@@ -28,6 +30,7 @@ class SubjectsController < ApplicationController
       
       # If save fails, redispaly the form so the user can fix problems
     else
+      @subject_count = Subject.count + 1
       render('new')
     end
     
@@ -36,6 +39,7 @@ class SubjectsController < ApplicationController
 
   def edit
     @subject = Subject.find(params[:id])
+    @subject_count = Subject.count
   end
   
   def update
@@ -52,6 +56,7 @@ class SubjectsController < ApplicationController
 
        # If save fails, redispaly the form so the user can fix problems
      else
+       @subject_count = Subject.count
        render('edit')
      end
 

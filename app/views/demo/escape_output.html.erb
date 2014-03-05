@@ -1,0 +1,9 @@
+<% evil_string = "<script>alert('Gotchat!');</script>".html_safe %>
+<% good_string = "<strong>Welcome to my site!</strong>".html_safe %>
+
+
+
+<%= evil_string.html_safe? %><br/>
+<%= good_string.html_safe? %><br/>
+
+<hr/>
