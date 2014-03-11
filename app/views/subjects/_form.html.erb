@@ -3,8 +3,7 @@
 <table summary="Subject form fields">
   <tr>
     <th><%= f.label(:name, "Name") %></th>
-    <td><%= f.text_field(:name) %>
-	</td>
+    <td><%= f.text_field(:name) %></td>
   </tr>
   <tr>
     <th><%= f.label(:position) %></th>
@@ -13,5 +12,9 @@
   <tr>
     <th><%= f.label(:visible) %></th>
     <td><%= f.check_box(:visible) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:created_at) %></th>
+    <td><%= f.datetime_select(:created_at, :order => [:month, :day, :year]) %></td>
   </tr>
 </table>

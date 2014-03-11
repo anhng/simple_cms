@@ -1,9 +1,10 @@
 class PagesController < ApplicationController
 
   layout "admin"
+
   before_action :confirm_logged_in
   before_action :find_subject
-  
+
   def index
     # @pages = Page.where(:subject_id => @subject.id).sorted
     @pages = @subject.pages.sorted
@@ -14,9 +15,9 @@ class PagesController < ApplicationController
   end
 
   def new
+    @page = Page.new({:subject_id => @subject.id, :name => "Default"})
     @subjects = Subject.order('position ASC')
     @page_count = Page.count + 1
-    @page = Page.new({:subject_id => @subject.id, :name => "Default"})
   end
 
   def create
@@ -65,7 +66,7 @@ class PagesController < ApplicationController
     def page_params
       params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
     end
-    
+
     def find_subject
       if params[:subject_id]
         @subject = Subject.find(params[:subject_id])
